@@ -12,7 +12,10 @@ SMALLEST_SINGLE_PATH = 2
 LONGEST_SINGLE_PATH = 8
 VERT_NUM = 6
 
-distance_dict = defaultdict(dict)
+#captures the distance of all nodes to a node destination without having to backtrack
+non_bcktrk_dist_dict = defaultdict(dict)
+
+f = open('output', 'r+')
 pp = PrettyPrinter()
 
 def test_input_structure(path):
@@ -29,10 +32,18 @@ def distance_calc():
             current_adj_node = chr(ord('A') + adj_node)
             print("\tcurrent adjacent letter: " + current_adj_node)
             if current_adj_node is not current_letter:
-                distance_dict[current_letter][current_adj_node] = gaussian_sum(current_letter, current_adj_node)
-                pp.pprint(distance_dict[current_letter])
+                non_bcktrk_dist_dict[current_letter][current_adj_node] = gaussian_sum(current_letter, current_adj_node)
+                pp.pprint(non_bcktrk_dist_dict[current_letter])
             else:
                 print("Same as current letter")
+
+def write_dict():
+    f.write("Calculated Values")
+
+    for node in non_bcktrk_dist_dict:
+        f.write("\n\t" + node + " = ")
+        for adj_node in non_bcktrk_dist_dict[node]:
+            f.write(adj_node + " : " + str(non_bcktrk_dist_dict[node][adj_node]) + ",\t")
 
 def gaussian_sum(starting_letter, terminal_letter):
     a_range = ord(starting_letter) - 65 + 1
@@ -48,8 +59,11 @@ def gaussian_sum(starting_letter, terminal_letter):
 
 def set_dest(path):
     vertex_list = read_file(path)
+    f.write("\nTravelled Values")
+
     for source in vertex_list:
         print("Source: " + source)
+        f.write("\n\t" + source + " = ")
         for destination in vertex_list:
             if source != destination:
                 print("\tDestination: " + destination)
@@ -58,6 +72,7 @@ def set_dest(path):
 def create_path(subject_node, dest_node, vertex_dict, distance_sum, discovered):
     discovered.append(subject_node)
     if subject_node == dest_node:
+        f.write(dest_node + " : " + str(float(distance_sum)) + ",\t")
         print("\t\tCompleted, distance: " + str(distance_sum))
         return True
 
@@ -78,6 +93,7 @@ if __name__ == "__main__":
         print("usage: dictionary_test.py INPUT\n\nVisualizes an input graph.\n\npositional arguments:\nFILE:\ta path to the graph file, relative to the current path")
     else:
         distance_calc()
+        write_dict()
         print("======================================TEST: CORRECT INPUT FILE======================================\n")
         set_dest(sys.argv[1])
         print("====================================================================================================\n")
