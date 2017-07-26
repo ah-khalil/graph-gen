@@ -1,0 +1,16 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "interpreter": "(default)",
+      "name": "dictionarytest.py",
+      "nativeDebug": false,
+      "project": "test\\dictionarytest.py",
+      "type": "python",
+      "webBrowserUrl": "",
+      "interpreterArguments": "",
+      "scriptArguments": "false_input"
+    }
+  ]
+}
