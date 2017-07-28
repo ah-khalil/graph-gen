@@ -17,9 +17,9 @@ __furthest_right = None
 __start_node_point = Point((__win_width/2) + __radius, __win_height/2)
 __graph_nodes = []
 
-window = GraphWin("My Graph", __win_width, __win_height)"""
+window = GraphWin("My Graph", __win_width, __win_height)
 
-    """point_one_x = 280*sqrt(2.0)*cos(radians(45))
+    point_one_x = 280*sqrt(2.0)*cos(radians(45))
     point_one_y = 220*sqrt(2.0)*sin(radians(45))
     print("Point One X: " + str(point_one_x))
     print("Point One Y: " + str(point_one_y))

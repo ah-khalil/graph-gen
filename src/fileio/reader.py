@@ -14,15 +14,14 @@ def read_file(path):
 #   Creates a dictionary with the vertices in the input file
 #   :param in_line:
 #   :return vertex_list:
-
 def create_vertex_list(in_line):
     vertex_list = defaultdict(lambda: 'NA')
 
     lines = in_line.strip("\n")
     lines_arr = lines.split("->")
 
-    if len(lines_arr) != 2:
-        raise IOError("Make sure the node name and it's adjacent nodes are separated by a '->")
+    if len(lines_arr) != 2 or (lines_arr[0].strip(' ') == '' or lines_arr[1].strip(' ') == ''):
+        raise IOError("Make sure the node name and it's adjacent nodes exist and are separated by a '->'")
 
     #the following is quite ugly, will be optimized later
     regex_number = '[A-Z],\s[0-9]'
@@ -32,9 +31,7 @@ def create_vertex_list(in_line):
     items = re.findall(regex_number, lines_arr[1])
 
     if len(items) == 0:
-        if len(re.findall(regex_non_number, lines_arr[1])) == 0:
-            raise IOError("If there are nodes that aren't connected to anything, don't add an arrow")
-        elif len(re.findall(regex_non_number, lines_arr[1])) > 0:
+        if len(re.findall(regex_non_number, lines_arr[1])) > 0:
             raise IOError("Distance should be a number")
     elif len(re.findall(regex_all, lines_arr[1])) > 0:
         raise IOError("Too much data, use only name and distance")
@@ -47,3 +44,9 @@ def create_vertex_list(in_line):
     vertex_list[lines_arr[0].strip()] = sub_dict
 
     return vertex_list
+
+#   Checks input line to see if it conforms to required format
+#   :param line:
+#   :return boolean:
+def input_checker(line):
+    pass
